@@ -6,7 +6,7 @@ COPY index.html C:\inetpub\wwwroot\index.html
 COPY styles.css C:\inetpub\wwwroot\styles.css
 
 # Expose port 80
-EXPOSE 80
+EXPOSE 70
 
 # Health check using PowerShell
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 `
