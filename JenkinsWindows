@@ -2,14 +2,19 @@ pipeline {
     agent any 
 
     environment {
-        PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\Windows\\System32"
+        PATH = "C:\\Program Files\\Git\\bin;C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\Windows\\System32"
     }
 
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'main', 
-                    url: 'https://github.com/pramod-6695/my-website.git'
+                script {
+                    try {
+                        git branch: 'main', url: 'https://github.com/pramod-6695/my-website.git'
+                    } catch (Exception e) {
+                        error "Failed to clone repository: ${e.message}"
+                    }
+                }
             }
         }
 
@@ -22,26 +27,32 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    bat 'docker build -t my-website .'
+                    try {
+                        bat 'docker build -t my-website .'
+                    } catch (Exception e) {
+                        error "Docker build failed: ${e.message}"
+                    }
                 }
             }
         }
 
-       stage('Run Docker Container') {
-    steps {
-        script {
-            // Stop and remove the existing container if running
-            bat '''
-            docker stop website-container || echo "No container to stop"
-docker rm website-container || echo "No container to remove"
-
-            '''
-
-            // Run the new container
-            bat 'docker run -d -p 8040:70 --name website-container my-website'
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    try {
+                        // Stop and remove the existing container if running
+                        bat '''
+                        docker stop website-container || echo "No container to stop"
+                        docker rm website-container || echo "No container to remove"
+                        '''
+                        
+                        // Run the new container
+                        bat 'docker run -d -p 8040:80 --name website-container my-website'
+                    } catch (Exception e) {
+                        error "Failed to run Docker container: ${e.message}"
+                    }
+                }
+            }
         }
-    }
-}
-
     }
 }
