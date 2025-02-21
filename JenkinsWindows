@@ -35,7 +35,7 @@ pipeline {
                     bat 'for /f "tokens=*" %i in (\'docker ps -aq --filter "name=website-container"\') do docker rm %i'
 
                     // Run the new container
-                    bat 'docker run -d -p 8040:80 --name website-container my-website'
+                    bat 'docker run -d -p 8040:70 --name website-container my-website'
                 }
             }
         }
