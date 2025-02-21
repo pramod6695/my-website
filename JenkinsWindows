@@ -31,8 +31,10 @@ pipeline {
             steps {
                 script {
                     // Stop and remove the existing container (if running)
-                   bat 'for /f "tokens=*" %%i in (\'docker ps -q --filter "name=website-container"\') do docker stop %%i'
-                    bat 'for /f "tokens=*" %%i in (\'docker ps -aq --filter "name=website-container"\') do docker rm %%i'
+                   bat 'cmd /c "for /f \"tokens=*\" %%i in (\'docker ps -q --filter \"name=website-container\"\') do docker stop %%i"'
+                    bat 'cmd /c "for /f \"tokens=*\" %%i in (\'docker ps -aq --filter \"name=website-container\"\') do docker rm %%i"'
+
+
 
                     // Run the new container
                     bat 'docker run -d -p 8040:70 --name website-container my-website'
