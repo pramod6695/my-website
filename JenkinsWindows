@@ -27,19 +27,20 @@ pipeline {
             }
         }
 
-        stage('Run Docker Container') {
-            steps {
-                script {
-                    // Stop and remove the existing container (if running)
-                 
-                    $container = docker ps -q --filter "name=website-container"
-                    if ($container) { docker stop $container; docker rm $container }
+       stage('Run Docker Container') {
+    steps {
+        script {
+            // Stop and remove the existing container if running
+            bat '''
+            for /f "tokens=*" %%i in ('docker ps -q --filter "name=website-container"') do docker stop %%i
+            for /f "tokens=*" %%i in ('docker ps -aq --filter "name=website-container"') do docker rm %%i
+            '''
 
-
-                    // Run the new container
-                    bat 'docker run -d -p 8040:70 --name website-container my-website'
-                }
-            }
+            // Run the new container
+            bat 'docker run -d -p 8040:70 --name website-container my-website'
         }
+    }
+}
+
     }
 }
