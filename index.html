@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Inventory Management</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Asset Inventory Management</h1>
+        
+        <!-- Form for Adding/Updating Asset Records -->
+        <form id="assetForm">
+            <!-- Existing form fields -->
+            <div class="form-group">
+                <label for="cpuNumber">CPU Number (Unique Key):</label>
+                <input type="text" id="cpuNumber" name="cpuNumber" required>
+            </div>
+            <div class="form-group">
+                <label for="employeeName">Employee Name:</label>
+                <input type="text" id="employeeName" name="employeeName" required>
+            </div>
+            <div class="form-group">
+                <label for="employeeNumber">Employee Number:</label>
+                <input type="text" id="employeeNumber" name="employeeNumber" required>
+            </div>
+            <div class="form-group">
+                <label for="purchaseDate">Purchase Date:</label>
+                <input type="date" id="purchaseDate" name="purchaseDate" required>
+            </div>
+            <div class="form-group">
+                <label for="assignedDate">Assigned Date:</label>
+                <input type="date" id="assignedDate" name="assignedDate" required>
+            </div>
+            <div class="form-group">
+                <label for="serialNumber">Serial Number:</label>
+                <input type="text" id="serialNumber" name="serialNumber" required>
+            </div>
+            <div class="form-group">
+                <label for="assetTag">Asset Tag:</label>
+                <input type="text" id="assetTag" name="assetTag" required>
+            </div>
+            <div class="form-group">
+                <label for="verificationStatus">Verification Status:</label>
+                <select id="verificationStatus" name="verificationStatus">
+                    <option value="Verified">Verified</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Unverified">Unverified</option>
+                </select>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+
+        <!-- Search Field -->
+        <div class="search-container">
+            <label for="searchInput">Search:</label>
+            <input type="text" id="searchInput" placeholder="Search by any field">
+            <button onclick="searchTable()">Search</button>
+        </div>
+
+        <!-- Table to Display Records -->
+        <h2>Asset Records</h2>
+        <table id="assetTable">
+            <thead>
+                <tr>
+                    <th>CPU Number</th>
+                    <th>Employee Name</th>
+                    <th>Employee Number</th>
+                    <th>Purchase Date</th>
+                    <th>Assigned Date</th>
+                    <th>Serial Number</th>
+                    <th>Asset Tag</th>
+                    <th>Verification Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Asset Records Will Be Displayed Here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="assets/scripts.js"></script>
+</body>
+</html>
