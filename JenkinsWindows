@@ -1,0 +1,43 @@
+pipeline {
+    agent any 
+
+    environment {
+        PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\Windows\\System32"
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main', 
+                    url: 'https://github.com/pramod-6695/my-website.git'
+            }
+        }
+
+        stage('Test Shell') {
+            steps {
+                bat 'echo Shell is working!'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    bat 'docker build -t my-website .'
+                }
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    // Stop and remove the existing container (if running)
+                    bat 'for /f "tokens=*" %i in (\'docker ps -q --filter "name=website-container"\') do docker stop %i'
+                    bat 'for /f "tokens=*" %i in (\'docker ps -aq --filter "name=website-container"\') do docker rm %i'
+
+                    // Run the new container
+                    bat 'docker run -d -p 8040:80 --name website-container my-website'
+                }
+            }
+        }
+    }
+}
